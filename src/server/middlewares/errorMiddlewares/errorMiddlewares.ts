@@ -1,15 +1,15 @@
-import "..loadEnviroment.js";
-import createDebug from "debug";
-import type CustomError from "../../../CustomError/CustomError.js";
+import "../../../loadEnviroment.js";
 import { type NextFunction, type Request, type Response } from "express";
+import createDebug from "debug";
 import chalk from "chalk";
+import type CustomError from "../../../CustomError/CustomError.js";
 
 const debug = createDebug("suspiria-api:server:middlewares:errorMiddlewares:");
 
 export const generalError = (
   error: CustomError,
-  res: Response,
   _req: Request,
+  res: Response,
   _next: NextFunction
 ) => {
   debug(chalk.redBright(error.message));
@@ -17,5 +17,5 @@ export const generalError = (
   const statusCode = error.statusCode || 500;
   const message = error.statusCode ? error.message : "General server error";
 
-  res.status(statusCode).json(message);
+  res.status(statusCode).json({ message });
 };
