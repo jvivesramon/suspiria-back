@@ -7,8 +7,8 @@ import CustomError from "../../../CustomError/CustomError.js";
 const debug = createDebug("suspiria-api:server:middlewares:errorMiddlewares:");
 
 export const notFoundError = (
-  req: Response,
-  res: Response,
+  _res: Request,
+  _req: Response,
   next: NextFunction
 ) => {
   const error = new CustomError(404, "Endpoint not found");
