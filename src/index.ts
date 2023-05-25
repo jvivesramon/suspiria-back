@@ -1,7 +1,7 @@
 import "./loadEnviroment.js";
 import createDebug from "debug";
-import app from "./server/index.js";
 import chalk from "chalk";
+import app from "./server/index.js";
 
 const debug = createDebug("suspiria-api:root");
 
