@@ -3,6 +3,10 @@ import { type NextFunction, type Response } from "express";
 import jwt from "jsonwebtoken";
 import { type CustomRequest } from "../../types.js";
 import CustomError from "../../../CustomError/CustomError.js";
+import {
+  errorMessages,
+  statusCode,
+} from "../../utils/responseData/responseData.js";
 
 const authMiddleware = (
   req: CustomRequest,
@@ -13,7 +17,10 @@ const authMiddleware = (
     const authorizationHeader = req.header("Authorization");
 
     if (!authorizationHeader?.includes("Bearer")) {
-      const error = new CustomError(401, "Missing token");
+      const error = new CustomError(
+        statusCode.unauthorized,
+        errorMessages.missingToken
+      );
 
       throw error;
     }
@@ -28,7 +35,7 @@ const authMiddleware = (
   } catch (error: unknown) {
     const customError =
       (error as Error).name === "JsonWebTokenError"
-        ? new CustomError(401, "Invalid token")
+        ? new CustomError(statusCode.unauthorized, errorMessages.invalidToken)
         : error;
 
     next(customError);
