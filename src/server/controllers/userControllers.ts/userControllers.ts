@@ -19,9 +19,9 @@ const loginController = async (
   try {
     const user = await User.findOne({ username }).exec();
 
-    if (!user || !(await bcrypt.compare(user.password, password))) {
+    if (!user || !(await bcrypt.compare(password, user.password))) {
       const error = new CustomError(
-        statusCode.notFound,
+        statusCode.unauthorized,
         errorMessages.invalidCredentials
       );
 

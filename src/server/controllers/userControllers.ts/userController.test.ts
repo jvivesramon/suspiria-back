@@ -58,9 +58,9 @@ describe("Given a loginUserController", () => {
   });
 
   describe("When it receives a request with wrongs credentials", () => {
-    test("Then it should call the next function with 404 status and a 'Wrong credentials' error", async () => {
+    test("Then it should call the next function with 401 status and a 'Wrong credentials' error", async () => {
       const error = new CustomError(
-        statusCode.notFound,
+        statusCode.unauthorized,
         errorMessages.invalidCredentials
       );
 
