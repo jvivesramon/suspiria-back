@@ -18,6 +18,10 @@ export interface UserDbCredentials extends UserCredentials {
   _id: Types.ObjectId;
 }
 
+export interface CustomRequest extends Request {
+  userId: string;
+}
+
 export type UserCredentialsRequest = Request<
   Record<string, unknown>,
   Record<string, unknown>,
