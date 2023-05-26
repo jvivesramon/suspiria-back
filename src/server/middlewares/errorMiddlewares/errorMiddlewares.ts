@@ -3,6 +3,10 @@ import { type NextFunction, type Request, type Response } from "express";
 import createDebug from "debug";
 import chalk from "chalk";
 import CustomError from "../../../CustomError/CustomError.js";
+import {
+  errorMessages,
+  statusCode,
+} from "../../utils/responseData/responseData.js";
 
 const debug = createDebug("suspiria-api:server:middlewares:errorMiddlewares:");
 
@@ -11,7 +15,10 @@ export const notFoundError = (
   _req: Response,
   next: NextFunction
 ) => {
-  const error = new CustomError(404, "Endpoint not found");
+  const error = new CustomError(
+    statusCode.notFound,
+    errorMessages.endpointNotFound
+  );
 
   next(error);
 };
@@ -24,8 +31,8 @@ export const generalError = (
 ) => {
   debug(chalk.redBright(error.message));
 
-  const statusCode = error.statusCode || 500;
-  const message = error.statusCode ? error.message : "General server error";
+  const statusCodeError = error.statusCode || statusCode.internalServerError;
+  const message = error.statusCode ? error.message : errorMessages.generalError;
 
-  res.status(statusCode).json({ message });
+  res.status(statusCodeError).json({ message });
 };

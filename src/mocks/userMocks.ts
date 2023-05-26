@@ -1,7 +1,9 @@
-import { type UserUniqueCredentials, type UserCredentials } from "../types.js";
+import {
+  type UserUniqueCredentials,
+  type UserCredentials,
+} from "../server/types.js";
 
 export const userData: UserCredentials = {
-  name: "Michael",
   username: "Michael",
   password: "thatswhatshesaid",
 };

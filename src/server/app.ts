@@ -3,11 +3,11 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import { pingController } from "./controllers/pingController/pingController.js";
-import path from "./paths/paths.js";
 import {
   generalError,
   notFoundError,
 } from "./middlewares/errorMiddlewares/errorMiddlewares.js";
+import path from "./utils/paths/paths.js";
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS;
 

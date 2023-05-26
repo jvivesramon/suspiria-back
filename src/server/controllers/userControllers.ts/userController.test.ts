@@ -1,11 +1,15 @@
 import { type Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { type UserCredentialsRequest } from "../../../types.js";
+import { type UserCredentialsRequest } from "../../types.js";
 import loginController from "./userControllers.js";
-import User from "../../../../database/models/User.js";
+import User from "../../../database/models/User.js";
 import { userData, userDataCredentisals } from "../../../mocks/userMocks.js";
-import CustomError from "../../../../CustomError/CustomError.js";
+import CustomError from "../../../CustomError/CustomError.js";
+import {
+  errorMessages,
+  statusCode,
+} from "../../utils/responseData/responseData.js";
 
 beforeEach(() => jest.clearAllMocks());
 
@@ -33,15 +37,13 @@ describe("Given a loginUserController", () => {
     bcrypt.compare = jest.fn().mockResolvedValue(true);
 
     test("Then it should call the response's method status with 200", async () => {
-      const expectedStatus = 200;
-
       await loginController(
         req as UserCredentialsRequest,
         res as Response,
         next
       );
 
-      expect(res.status).toHaveBeenCalledWith(expectedStatus);
+      expect(res.status).toHaveBeenCalledWith(statusCode.ok);
     });
 
     test("Then it should call the response's method json with a 'token'", async () => {
@@ -57,7 +59,10 @@ describe("Given a loginUserController", () => {
 
   describe("When it receives a request with wrongs credentials", () => {
     test("Then it should call the next function with 404 status and a 'Wrong credentials' error", async () => {
-      const error = new CustomError(404, "Wrong credentials");
+      const error = new CustomError(
+        statusCode.notFound,
+        errorMessages.invalidCredentials
+      );
 
       bcrypt.compare = jest.fn().mockResolvedValue(false);
 

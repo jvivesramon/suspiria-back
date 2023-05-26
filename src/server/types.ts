@@ -3,7 +3,6 @@ import { type Request } from "express";
 export interface UserCredentials {
   username: string;
   password: string;
-  name: string;
 }
 
 export interface UserUniqueCredentials extends UserCredentials {
