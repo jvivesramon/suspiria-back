@@ -1,3 +1,4 @@
+import "../../loadEnviroment.js";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import connectToDatabase from "../../database/connectDatabase";
 import mongoose from "mongoose";
