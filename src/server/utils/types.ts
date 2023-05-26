@@ -17,4 +17,6 @@ export interface ErrorMessagesStructure {
   endpointNotFound: string;
   generalError: string;
   validationFailed: string;
+  invalidToken: string;
+  missingToken: string;
 }

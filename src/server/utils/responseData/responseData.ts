@@ -16,4 +16,6 @@ export const errorMessages: ErrorMessagesStructure = {
   endpointNotFound: "Endpoint not found",
   generalError: "General server error",
   validationFailed: "Validation Failed",
+  invalidToken: "Invalid token",
+  missingToken: "Missing token",
 };
