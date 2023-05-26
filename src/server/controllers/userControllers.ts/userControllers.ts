@@ -1,9 +1,13 @@
 import { type Response, type NextFunction } from "express";
 import bcrypt from "bcryptjs";
 import jwt, { type JwtPayload } from "jsonwebtoken";
-import { type UserCredentialsRequest } from "../../../types.js";
-import User from "../../../../database/models/User.js";
-import CustomError from "../../../../CustomError/CustomError.js";
+import { type UserCredentialsRequest } from "../../types.js";
+import User from "../../../database/models/User.js";
+import CustomError from "../../../CustomError/CustomError.js";
+import {
+  errorMessages,
+  statusCode,
+} from "../../utils/responseData/responseData.js";
 
 const loginController = async (
   req: UserCredentialsRequest,
@@ -16,7 +20,10 @@ const loginController = async (
     const user = await User.findOne({ username }).exec();
 
     if (!user || !(await bcrypt.compare(user.password, password))) {
-      const error = new CustomError(401, "Wrong credentials");
+      const error = new CustomError(
+        statusCode.notFound,
+        errorMessages.invalidCredentials
+      );
 
       throw error;
     }
@@ -28,7 +35,7 @@ const loginController = async (
 
     const token = jwt.sign(tokenPayload, process.env.JWT_SECRET!);
 
-    res.status(200).json({ token });
+    res.status(statusCode.ok).json({ token });
   } catch (error) {
     next(error);
   }

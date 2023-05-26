@@ -1,6 +1,10 @@
 import { type NextFunction, type Request, type Response } from "express";
 import CustomError from "../../../CustomError/CustomError.js";
 import { generalError, notFoundError } from "./errorMiddlewares.js";
+import {
+  errorMessages,
+  statusCode,
+} from "../../utils/responseData/responseData.js";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -15,7 +19,10 @@ const res: Pick<Response, "status" | "json"> = {
 
 const next = jest.fn();
 
-const error = new CustomError(404, "Endpoint not found");
+const error = new CustomError(
+  statusCode.notFound,
+  errorMessages.endpointNotFound
+);
 
 describe("Given a notFoundError middleware", () => {
   describe("When it is called", () => {
@@ -29,11 +36,9 @@ describe("Given a notFoundError middleware", () => {
 
 describe("Given a generalError middleware", () => {
   describe("When it is called with an unknown error", () => {
-    const generalServerError = new Error("General server error");
+    const generalServerError = new Error(errorMessages.generalError);
 
     test("Then it should call the response's method status with code 500", () => {
-      const statusCode = 500;
-
       generalError(
         generalServerError as CustomError,
         req as Request,
@@ -41,7 +46,7 @@ describe("Given a generalError middleware", () => {
         next
       );
 
-      expect(res.status).toHaveBeenCalledWith(statusCode);
+      expect(res.status).toHaveBeenCalledWith(statusCode.internalServerError);
     });
 
     test("Then it should call the response's method json with code error message", () => {
