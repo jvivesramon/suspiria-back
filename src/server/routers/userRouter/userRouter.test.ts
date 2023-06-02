@@ -1,19 +1,22 @@
-import "../../loadEnviroment.js";
+import "../../../loadEnviroment.js";
 import { MongoMemoryServer } from "mongodb-memory-server";
-import connectToDatabase from "../../database/connectDatabase";
+import connectToDatabase from "../../../database/connectDatabase.js";
 import mongoose from "mongoose";
 import request, { type Response } from "supertest";
 import jwt from "jsonwebtoken";
-import User from "../../database/models/User.js";
+import User from "../../../database/models/User.js";
 import {
   userData,
   userDbConnection,
   wrongUserData,
-} from "../../mocks/userMocks";
-import { type UserDbCredentials } from "../types";
-import { errorMessages, statusCode } from "../utils/responseData/responseData";
-import path from "../utils/paths/paths";
-import app from "../app";
+} from "../../../mocks/userMocks.js";
+import { type UserDbCredentials } from "../../types.js";
+import {
+  errorMessages,
+  statusCode,
+} from "../../utils/responseData/responseData.js";
+import path from "../../utils/paths/paths.js";
+import app from "../../app.js";
 
 let server: MongoMemoryServer;
 
