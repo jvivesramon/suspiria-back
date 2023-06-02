@@ -8,7 +8,7 @@ import {
   notFoundError,
 } from "./middlewares/errorMiddlewares/errorMiddlewares.js";
 import path from "./utils/paths/paths.js";
-import userRouter from "./routers/userRouter.js";
+import userRouter from "./routers/userRouter/userRouter.js";
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS;
 
