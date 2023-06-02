@@ -1,4 +1,3 @@
-import "../../../loadEnviroments.js";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import request, { type Response } from "supertest";
 import mongoose from "mongoose";
@@ -39,17 +38,17 @@ describe("Given a GET '/pictures' endpoint", () => {
   describe("When it receives a request with an authorized header", () => {
     test("Then it should responde with a 200 statuscode and a list of pictures", async () => {
       const response: { body: PictureCardStructure[] } = await request(app)
-        .get(path.login)
+        .get(path.pictures)
         .set("Authorization", `Bearer ${tokenMock}`)
         .expect(statusCode.ok);
 
-      expect(response.body).toHaveLength(2);
+      expect(response.body).toHaveLength(1);
     });
   });
   describe("When it receives a request with an invalid token", () => {
     test("Then it should reject with status code 401 and a error message ''", async () => {
       const response: Response = await request(app)
-        .get(path.login)
+        .get(path.pictures)
         .expect(statusCode.unauthorized);
 
       expect(response.body.message).toBe(errorMessages.missingToken);
