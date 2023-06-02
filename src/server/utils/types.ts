@@ -2,6 +2,7 @@ export interface PathStructure {
   pingController: string;
   user: string;
   login: string;
+  pictures: string;
 }
 
 export interface StatusCodeStructure {
