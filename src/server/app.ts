@@ -9,6 +9,7 @@ import {
 } from "./middlewares/errorMiddlewares/errorMiddlewares.js";
 import path from "./utils/paths/paths.js";
 import userRouter from "./routers/userRouter/userRouter.js";
+import pictureRouter from "./routers/pictureRouter/pictureRouter.js";
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS;
 
@@ -29,6 +30,8 @@ app.use(express.json());
 app.get(path.pingController, pingController);
 
 app.use(path.user, userRouter);
+
+app.use(path.pictures, pictureRouter);
 
 app.use(notFoundError);
 
