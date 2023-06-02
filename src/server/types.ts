@@ -22,6 +22,8 @@ export interface CustomRequest extends Request {
   userId: string;
 }
 
+export type CustomRequestHeader = Pick<CustomRequest, "header" | "userId">;
+
 export type UserCredentialsRequest = Request<
   Record<string, unknown>,
   Record<string, unknown>,
