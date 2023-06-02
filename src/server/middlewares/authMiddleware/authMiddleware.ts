@@ -27,9 +27,9 @@ const authMiddleware = (
 
     const token = authorizationHeader.replace("Bearer ", "");
 
-    const { sub } = jwt.verify(token, process.env.JWT_SECRET!);
+    const { sub: id } = jwt.verify(token, process.env.JWT_SECRET!);
 
-    req.userId = sub as string;
+    req.userId = id as string;
 
     next();
   } catch (error: unknown) {
