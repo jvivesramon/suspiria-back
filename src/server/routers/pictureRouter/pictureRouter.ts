@@ -1,6 +1,6 @@
 import { Router } from "express";
-import authMiddleware from "../../middlewares/authMiddleware/authMiddleware";
-import getPictureCard from "../../controllers/pictureCardController/pictureCardController";
+import authMiddleware from "../../middlewares/authMiddleware/authMiddleware.js";
+import getPictureCard from "../../controllers/pictureCardController/pictureCardController.js";
 
 const pictureRouter = Router();
 
