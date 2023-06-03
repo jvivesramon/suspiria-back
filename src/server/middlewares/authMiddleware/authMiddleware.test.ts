@@ -1,12 +1,12 @@
 import { type NextFunction, type Request, type Response } from "express";
 import jwt from "jsonwebtoken";
-import authMiddleware from "./authMiddleware";
-import { type CustomRequestHeader, type CustomRequest } from "../../types";
-import CustomError from "../../../CustomError/CustomError";
+import authMiddleware from "./authMiddleware.js";
+import { type CustomRequestHeader, type CustomRequest } from "../../types.js";
+import CustomError from "../../../CustomError/CustomError.js";
 import {
   errorMessages,
   statusCode,
-} from "../../utils/responseData/responseData";
+} from "../../utils/responseData/responseData.js";
 
 beforeEach(() => {
   jest.clearAllMocks();
