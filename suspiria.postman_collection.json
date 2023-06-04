@@ -1,0 +1,100 @@
+{
+  "info": {
+    "_postman_id": "830beda2-657a-4ced-9c29-270c009d773c",
+    "name": "Suspiria",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "27034264"
+  },
+  "item": [
+    {
+      "name": "POST /user/login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\"username\" : \"admin\",\n\"password\" : \"admin\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:4005/user/login",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4005",
+          "path": ["user", "login"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET /pictures",
+      "protocolProfileBehavior": {
+        "disabledSystemHeaders": {},
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDcwN2RjZDExOWE2ZmM4NWJmODdkNTAiLCJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2ODU4ODM2Njl9._k9VKcye_JYxIE3Wxh9igYi8keNxVK2zgKiKIJ3GuuA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "",
+            "value": "",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:4005/pictures",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4005",
+          "path": ["pictures"],
+          "query": [
+            {
+              "key": "token",
+              "value": "\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDcwN2RjZDExOWE2ZmM4NWJmODdkNTAiLCJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2ODU4NzkyNjB9.1nRSYe_aqBVuQaTgQcXXJRTecobXQriYyem6oULiCBc\"",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET ping",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:4005/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4005",
+          "path": [""]
+        }
+      },
+      "response": []
+    }
+  ]
+}
