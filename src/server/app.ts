@@ -27,11 +27,11 @@ app.use(morgan("dev"));
 
 app.use(express.json());
 
-app.get(path.pingController, pingController);
-
 app.use(path.user, userRouter);
 
 app.use(path.pictures, pictureRouter);
+
+app.get(path.pingController, pingController);
 
 app.use(notFoundError);
 

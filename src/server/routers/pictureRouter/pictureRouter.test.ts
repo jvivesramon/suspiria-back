@@ -5,14 +5,14 @@ import app from "../../app.js";
 import connectToDatabase from "../../../database/connectDatabase.js";
 import Suspiria from "../../../database/models/Suspiria.js";
 import User from "../../../database/models/User.js";
-import { pictureCardMock } from "../../../mocks/pictureCardMocks.js";
 import { adminMock, tokenMock } from "../../../mocks/userMocks.js";
 import path from "../../utils/paths/paths.js";
 import {
   errorMessages,
   statusCode,
 } from "../../utils/responseData/responseData.js";
-import { type PictureCardStructure } from "../../types.js";
+import { type PictureCardListStructure } from "../../types.js";
+import { pictureCardMock } from "../../../mocks/pictureCardMocks.js";
 
 let server: MongoMemoryServer;
 
@@ -37,12 +37,12 @@ describe("Given a GET '/pictures' endpoint", () => {
   });
   describe("When it receives a request with an authorized header", () => {
     test("Then it should responde with a 200 statuscode and a list of pictures", async () => {
-      const response: { body: PictureCardStructure[] } = await request(app)
+      const response: { body: PictureCardListStructure } = await request(app)
         .get(path.pictures)
         .set("Authorization", `Bearer ${tokenMock}`)
         .expect(statusCode.ok);
 
-      expect(response.body).toHaveLength(1);
+      expect(response.body.pictures).toHaveLength(1);
     });
   });
   describe("When it receives a request with an invalid token", () => {

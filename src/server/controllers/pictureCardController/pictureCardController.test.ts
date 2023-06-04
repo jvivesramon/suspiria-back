@@ -39,7 +39,7 @@ describe("Given a pictureCardController controllers", () => {
     });
 
     test("Then it should call the response's method json with a list of picture cards", async () => {
-      const expectedPictures = pictureCardMock;
+      const expectedPictures = { pictures: pictureCardMock };
 
       await getPictureCard(
         req as Request,

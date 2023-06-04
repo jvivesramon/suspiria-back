@@ -13,8 +13,8 @@ const getPictureCard = async (
   next: NextFunction
 ) => {
   try {
-    const pictureCard = await Suspiria.find().limit(10).exec();
-    res.status(200).json(pictureCard);
+    const pictures = await Suspiria.find().limit(10).exec();
+    res.status(200).json({ pictures });
   } catch (error) {
     debug(chalk.bgMagenta(error.message));
 

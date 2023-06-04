@@ -53,3 +53,7 @@ export interface PictureCardStructure {
     colorSixth: string;
   };
 }
+
+export interface PictureCardListStructure {
+  pictures: PictureCardStructure[];
+}
