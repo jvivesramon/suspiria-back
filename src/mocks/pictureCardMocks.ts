@@ -1,4 +1,7 @@
-import { type PictureCardStructure } from "../server/types.js";
+import {
+  type PictureCardListStructure,
+  type PictureCardStructure,
+} from "../server/types.js";
 
 export const pictureCardMock: PictureCardStructure = {
   pictureData: {
@@ -23,4 +26,8 @@ export const pictureCardMock: PictureCardStructure = {
     colorFive: "#003399",
     colorSixth: "#0000ff",
   },
+};
+
+export const pictureListMock: PictureCardListStructure = {
+  pictures: [pictureCardMock],
 };

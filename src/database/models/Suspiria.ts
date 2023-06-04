@@ -39,6 +39,6 @@ const suspiriaItem = new Schema({
   },
 });
 
-const Suspiria = model("Suspiria", suspiriaItem, "suspiria");
+const Suspiria = model("Suspiria", suspiriaItem, "pictures");
 
 export default Suspiria;
