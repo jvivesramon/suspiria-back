@@ -1,17 +1,28 @@
 import { type NextFunction, type Request, type Response } from "express";
 import Suspiria from "../../../database/models/Suspiria.js";
 import { pictureCardMock } from "../../../mocks/pictureCardMocks.js";
-import getPictureCard from "./pictureCardController.js";
+import { deletePicture, getPictureCard } from "./pictureCardController.js";
 import {
   errorMessages,
   statusCode,
 } from "../../utils/responseData/responseData.js";
+import { Types } from "mongoose";
 
 beforeEach(() => {
   jest.clearAllMocks();
 });
 
-describe("Given a pictureCardController controllers", () => {
+interface CustomRequest extends Request {
+  userId: string;
+}
+
+interface CustomRequestParams extends CustomRequest {
+  params: {
+    idPicture: string;
+  };
+}
+
+describe("Given a getPictureCard controllers", () => {
   const req = {};
 
   const res: Partial<Response> = {
@@ -67,6 +78,80 @@ describe("Given a pictureCardController controllers", () => {
       );
 
       expect(next).toHaveBeenCalledWith(error);
+    });
+  });
+});
+
+const idPicture = new Types.ObjectId().toString();
+const idUser = new Types.ObjectId().toString();
+
+describe("Given a deletePicture controller", () => {
+  const req: Partial<CustomRequest> = {
+    params: {
+      idPicture,
+    },
+    userId: idUser,
+  };
+
+  const res: Partial<Response> = {
+    status: jest.fn().mockReturnThis(),
+    json: jest.fn(),
+  };
+
+  const next = jest.fn();
+
+  describe("When it receives a request with an picture id a response and a next function", () => {
+    test("Then it should call status response's method with status code '200' and json method with message 'Picture succesfully deleted'", async () => {
+      const expectedMessage = "Picture succesfully deleted";
+
+      Suspiria.findOne = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(idPicture),
+      });
+
+      Suspiria.findByIdAndDelete = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(idPicture),
+      });
+
+      await deletePicture(req as CustomRequestParams, res as Response, next);
+
+      expect(res.status).toHaveBeenCalledWith(statusCode.ok);
+      expect(res.json).toHaveBeenCalledWith({ message: expectedMessage });
+    });
+  });
+
+  describe("When it receives a request with a non-existing picture id, a response and next function", () => {
+    test("Then it should call status response method with status code 404 and json method with message 'No picture found'", async () => {
+      const expectedStatusCode = 404;
+      const expectedMessage = "No pictures found";
+
+      const req: Partial<CustomRequest> = {
+        params: {
+          idPicture,
+        },
+        userId: idPicture,
+      };
+
+      Suspiria.findOne = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(undefined),
+      });
+
+      await deletePicture(req as CustomRequestParams, res as Response, next);
+
+      expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
+      expect(res.json).toHaveBeenCalledWith({ message: expectedMessage });
+    });
+  });
+  describe("When the request fails", () => {
+    test("Then it should call the next function with the 'Couldn't connect to database' error message", async () => {
+      const expectedError = new Error("Couldn't connect to database");
+
+      Suspiria.findOne = jest.fn().mockReturnValue({
+        exec: jest.fn().mockRejectedValue(expectedError),
+      });
+
+      await deletePicture(req as CustomRequestParams, res as Response, next);
+
+      expect(next).toHaveBeenCalledWith(expectedError);
     });
   });
 });
