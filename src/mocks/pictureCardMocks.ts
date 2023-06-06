@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import {
   type PictureCardListStructure,
   type PictureCardStructure,
@@ -26,6 +27,8 @@ export const pictureCardMock: PictureCardStructure = {
     colorFive: "#003399",
     colorSixth: "#0000ff",
   },
+
+  user: new Types.ObjectId(),
 };
 
 export const pictureListMock: PictureCardListStructure = {

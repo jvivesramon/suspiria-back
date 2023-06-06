@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, Types, model } from "mongoose";
 
 const suspiriaItem = new Schema({
   pictureData: {
@@ -32,6 +32,10 @@ const suspiriaItem = new Schema({
     colorThird: {
       type: String,
       required: true,
+    },
+    user: {
+      type: Types.ObjectId,
+      ref: "User",
     },
     colorFourth: String,
     colorFive: String,
