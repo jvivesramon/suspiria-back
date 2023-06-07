@@ -1,3 +1,4 @@
+import "../../../loadEnviroment.js";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import request, { type Response } from "supertest";
 import mongoose from "mongoose";
@@ -28,6 +29,7 @@ afterAll(async () => {
 
 afterEach(async () => {
   await Suspiria.deleteMany();
+  await User.deleteMany();
 });
 
 describe("Given a GET '/pictures' endpoint", () => {
@@ -52,6 +54,28 @@ describe("Given a GET '/pictures' endpoint", () => {
         .expect(statusCode.unauthorized);
 
       expect(response.body.message).toBe(errorMessages.missingToken);
+    });
+  });
+});
+
+describe("Given a GET '/pictures/:pictureId' endpoint", () => {
+  beforeAll(async () => {
+    await Suspiria.create(pictureCardMock);
+  });
+
+  describe("When it receives a request with a valid id in its params", () => {
+    test("Then it should respond a status 200 and message 'Picture succesfully deleted'", async () => {
+      const statusCodeExpected = 200;
+      const expectedMessage = "Picture succesfully deleted";
+
+      const pictures = await Suspiria.find().exec();
+
+      const response = await request(app)
+        .delete(`/pictures/${pictures[0]._id.toString()}`)
+        .set("Authorization", `Bearer ${tokenMock}`)
+        .expect(statusCodeExpected);
+
+      expect(response.body.message).toBe(expectedMessage);
     });
   });
 });

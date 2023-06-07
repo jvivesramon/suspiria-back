@@ -124,13 +124,6 @@ describe("Given a deletePicture controller", () => {
       const expectedStatusCode = 404;
       const expectedMessage = "No pictures found";
 
-      const req: Partial<CustomRequest> = {
-        params: {
-          idPicture,
-        },
-        userId: idPicture,
-      };
-
       Suspiria.findOne = jest.fn().mockReturnValue({
         exec: jest.fn().mockResolvedValue(undefined),
       });
