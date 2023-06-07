@@ -5,6 +5,7 @@ import {
 } from "../server/types.js";
 
 export const pictureCardMock: PictureCardStructure = {
+  id: "1234",
   pictureData: {
     title: "Girl with a Pearl Earring",
     creationDate: "1667",

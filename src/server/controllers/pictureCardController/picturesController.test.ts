@@ -1,7 +1,7 @@
 import { type NextFunction, type Request, type Response } from "express";
 import Suspiria from "../../../database/models/Suspiria.js";
 import { pictureCardMock } from "../../../mocks/pictureCardMocks.js";
-import { deletePicture, getPictureCard } from "./pictureCardController.js";
+import { deletePicture, getPictures } from "./picturesController.js";
 import {
   errorMessages,
   statusCode,
@@ -16,9 +16,9 @@ interface CustomRequest extends Request {
   userId: string;
 }
 
-interface CustomRequestParams extends CustomRequest {
+export interface CustomRequestParams extends CustomRequest {
   params: {
-    idPicture: string;
+    pictureId: string;
   };
 }
 
@@ -40,11 +40,7 @@ describe("Given a getPictureCard controllers", () => {
     test("Then it should call the response's method status 200", async () => {
       const expectedStatus = statusCode.ok;
 
-      await getPictureCard(
-        req as Request,
-        res as Response,
-        next as NextFunction
-      );
+      await getPictures(req as Request, res as Response, next as NextFunction);
 
       expect(res.status).toHaveBeenCalledWith(expectedStatus);
     });
@@ -52,11 +48,7 @@ describe("Given a getPictureCard controllers", () => {
     test("Then it should call the response's method json with a list of picture cards", async () => {
       const expectedPictures = { pictures: pictureCardMock };
 
-      await getPictureCard(
-        req as Request,
-        res as Response,
-        next as NextFunction
-      );
+      await getPictures(req as Request, res as Response, next as NextFunction);
 
       expect(res.json).toHaveBeenCalledWith(expectedPictures);
     });
@@ -71,11 +63,7 @@ describe("Given a getPictureCard controllers", () => {
         exec: jest.fn().mockRejectedValue(error),
       });
 
-      await getPictureCard(
-        req as Request,
-        res as Response,
-        next as NextFunction
-      );
+      await getPictures(req as Request, res as Response, next as NextFunction);
 
       expect(next).toHaveBeenCalledWith(error);
     });
@@ -104,12 +92,12 @@ describe("Given a deletePicture controller", () => {
     test("Then it should call status response's method with status code '200' and json method with message 'Picture succesfully deleted'", async () => {
       const expectedMessage = "Picture succesfully deleted";
 
-      Suspiria.findOne = jest.fn().mockReturnValue({
+      Suspiria.findById = jest.fn().mockReturnValue({
         exec: jest.fn().mockResolvedValue(idPicture),
       });
 
       Suspiria.findByIdAndDelete = jest.fn().mockReturnValue({
-        exec: jest.fn().mockResolvedValue(idPicture),
+        exec: jest.fn().mockResolvedValue(pictureCardMock),
       });
 
       await deletePicture(req as CustomRequestParams, res as Response, next);
@@ -124,7 +112,7 @@ describe("Given a deletePicture controller", () => {
       const expectedStatusCode = 404;
       const expectedMessage = "No pictures found";
 
-      Suspiria.findOne = jest.fn().mockReturnValue({
+      Suspiria.findById = jest.fn().mockReturnValue({
         exec: jest.fn().mockResolvedValue(undefined),
       });
 
@@ -135,10 +123,10 @@ describe("Given a deletePicture controller", () => {
     });
   });
   describe("When the request fails", () => {
-    test("Then it should call the next function with the 'Couldn't connect to database' error message", async () => {
-      const expectedError = new Error("Couldn't connect to database");
+    test("Then it should call the next function with the 'No id found in your request' error message", async () => {
+      const expectedError = new Error("No id found in your request");
 
-      Suspiria.findOne = jest.fn().mockReturnValue({
+      Suspiria.findById = jest.fn().mockReturnValue({
         exec: jest.fn().mockRejectedValue(expectedError),
       });
 
