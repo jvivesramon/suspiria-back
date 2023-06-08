@@ -1,7 +1,14 @@
 import { type NextFunction, type Request, type Response } from "express";
 import Suspiria from "../../../database/models/Suspiria.js";
-import { pictureCardMock } from "../../../mocks/pictureCardMocks.js";
-import { deletePicture, getPictures } from "./picturesController.js";
+import {
+  newPictureMock,
+  pictureCardMock,
+} from "../../../mocks/pictureCardMocks.js";
+import {
+  addPicture,
+  deletePicture,
+  getPictures,
+} from "./picturesController.js";
 import {
   errorMessages,
   statusCode,
@@ -18,14 +25,15 @@ interface CustomRequest extends Request {
   userId: string;
 }
 
+const res: Partial<Response> = {
+  status: jest.fn().mockReturnThis(),
+  json: jest.fn(),
+};
+
+const next = jest.fn();
+
 describe("Given a getPictureCard controllers", () => {
   const req = {};
-
-  const res: Partial<Response> = {
-    status: jest.fn().mockReturnThis(),
-    json: jest.fn(),
-  };
-  const next = jest.fn();
 
   describe("When it receives a response", () => {
     Suspiria.find = jest.fn().mockReturnValue({
@@ -77,14 +85,7 @@ describe("Given a deletePicture controller", () => {
     userId: idUser,
   };
 
-  const res: Partial<Response> = {
-    status: jest.fn().mockReturnThis(),
-    json: jest.fn(),
-  };
-
-  const next = jest.fn();
-
-  describe("When it receives a request with an picture id a response and a next function", () => {
+  describe("When it receives a request with a picture id a response and a next function", () => {
     test("Then it should call status response's method with status code '200' and json method with message 'Picture succesfully deleted'", async () => {
       const expectedMessage = "Picture succesfully deleted";
 
@@ -127,6 +128,45 @@ describe("Given a deletePicture controller", () => {
       await deletePicture(req as CustomRequestParams, res as Response, next);
 
       expect(next).toHaveBeenCalledWith(expectedError);
+    });
+  });
+});
+
+describe("Given a addPicture controller", () => {
+  const user = new Types.ObjectId().toString();
+
+  const req: Partial<CustomRequest> = {
+    userId: user,
+    body: { picture: newPictureMock },
+  };
+
+  describe("When it receives a request with a picture and a user id a response and a next function", () => {
+    test("Then it should call the response's methos status 200 and the method json with the picture", async () => {
+      const status = 200;
+
+      Suspiria.create = jest.fn().mockResolvedValue(newPictureMock);
+
+      await addPicture(req as CustomRequest, res as Response, next);
+
+      expect(res.status).toHaveBeenCalledWith(status);
+      expect(res.json).toHaveBeenCalledWith({ picture: newPictureMock });
+    });
+  });
+
+  describe("When it receives a request with a non-existing id and picture a response and a next function", () => {
+    test("Then it should call next with a status 404 and a 'No picture or user found' error message", async () => {
+      const status = 404;
+      const expectedError = "No picture or user found";
+      const error = new CustomError(status, expectedError);
+
+      const req: Partial<CustomRequest> = {
+        userId: undefined,
+        body: { picture: undefined },
+      };
+
+      await addPicture(req as CustomRequest, res as Response, next);
+
+      expect(next).toHaveBeenCalledWith(error);
     });
   });
 });

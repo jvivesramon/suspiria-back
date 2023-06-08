@@ -1,11 +1,11 @@
 import { Types } from "mongoose";
 import {
+  type PictureCardBodyStructure,
   type PictureCardListStructure,
   type PictureCardStructure,
 } from "../server/types.js";
 
-export const pictureCardMock: PictureCardStructure = {
-  id: "1234",
+export const newPictureMock: PictureCardBodyStructure = {
   pictureData: {
     title: "Girl with a Pearl Earring",
     creationDate: "1667",
@@ -30,6 +30,11 @@ export const pictureCardMock: PictureCardStructure = {
   },
 
   user: new Types.ObjectId(),
+};
+
+export const pictureCardMock: PictureCardStructure = {
+  id: "1234",
+  ...newPictureMock,
 };
 
 export const pictureListMock: PictureCardListStructure = {
