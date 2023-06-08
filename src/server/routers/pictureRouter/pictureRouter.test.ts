@@ -5,8 +5,7 @@ import mongoose from "mongoose";
 import app from "../../app.js";
 import connectToDatabase from "../../../database/connectDatabase.js";
 import Suspiria from "../../../database/models/Suspiria.js";
-import User from "../../../database/models/User.js";
-import { adminMock, tokenMock } from "../../../mocks/userMocks.js";
+import { tokenMock } from "../../../mocks/userMocks.js";
 import path from "../../utils/paths/paths.js";
 import {
   errorMessages,
@@ -29,12 +28,10 @@ afterAll(async () => {
 
 afterEach(async () => {
   await Suspiria.deleteMany();
-  await User.deleteMany();
 });
 
 describe("Given a GET '/pictures' endpoint", () => {
   beforeAll(async () => {
-    await User.create(adminMock);
     await Suspiria.create(pictureCardMock);
   });
   describe("When it receives a request with an authorized header", () => {

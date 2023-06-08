@@ -7,6 +7,8 @@ import {
   statusCode,
 } from "../../utils/responseData/responseData.js";
 import { Types } from "mongoose";
+import CustomError from "../../../CustomError/CustomError.js";
+import { type CustomRequestParams } from "../../types.js";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -14,12 +16,6 @@ beforeEach(() => {
 
 interface CustomRequest extends Request {
   userId: string;
-}
-
-export interface CustomRequestParams extends CustomRequest {
-  params: {
-    pictureId: string;
-  };
 }
 
 describe("Given a getPictureCard controllers", () => {
@@ -108,9 +104,8 @@ describe("Given a deletePicture controller", () => {
   });
 
   describe("When it receives a request with a non-existing picture id, a response and next function", () => {
-    test("Then it should call status response method with status code 404 and json method with message 'No picture found'", async () => {
-      const expectedStatusCode = 404;
-      const expectedMessage = "No pictures found";
+    test("Then it should call next with status code 404 and json method with message 'No picture found'", async () => {
+      const expectedError = new CustomError(404, "No pictures found");
 
       Suspiria.findById = jest.fn().mockReturnValue({
         exec: jest.fn().mockResolvedValue(undefined),
@@ -118,8 +113,7 @@ describe("Given a deletePicture controller", () => {
 
       await deletePicture(req as CustomRequestParams, res as Response, next);
 
-      expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
-      expect(res.json).toHaveBeenCalledWith({ message: expectedMessage });
+      expect(next).toHaveBeenCalledWith(expectedError);
     });
   });
   describe("When the request fails", () => {

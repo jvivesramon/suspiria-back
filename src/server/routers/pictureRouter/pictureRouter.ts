@@ -3,7 +3,7 @@ import authMiddleware from "../../middlewares/authMiddleware/authMiddleware.js";
 import {
   deletePicture,
   getPictures,
-} from "../../controllers/pictureCardController/picturesController.js";
+} from "../../controllers/pictureController/picturesController.js";
 
 const pictureRouter = Router();
 
