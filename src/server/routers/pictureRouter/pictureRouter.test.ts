@@ -58,12 +58,12 @@ describe("Given a GET '/pictures' endpoint", () => {
   });
 });
 
-describe("Given a GET '/pictures/:pictureId' endpoint", () => {
-  beforeAll(async () => {
-    await Suspiria.create(pictureCardMock);
-  });
-
+describe("Given a DELETE '/pictures/:pictureId' endpoint", () => {
   describe("When it receives a request with a valid id in its params", () => {
+    beforeEach(async () => {
+      await Suspiria.create(pictureCardMock);
+    });
+
     test("Then it should respond a status 200 and message 'Picture succesfully deleted'", async () => {
       const statusCodeExpected = 200;
       const expectedMessage = "Picture succesfully deleted";

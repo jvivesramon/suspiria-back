@@ -31,6 +31,7 @@ export type UserCredentialsRequest = Request<
 >;
 
 export interface PictureCardStructure {
+  id: string;
   pictureData: {
     title: string;
     creationDate: string;

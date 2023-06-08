@@ -33,13 +33,13 @@ const suspiriaItem = new Schema({
       type: String,
       required: true,
     },
-    user: {
-      type: Types.ObjectId,
-      ref: "User",
-    },
     colorFourth: String,
     colorFive: String,
     colorSixth: String,
+  },
+  user: {
+    type: Types.ObjectId,
+    ref: "User",
   },
 });
 
