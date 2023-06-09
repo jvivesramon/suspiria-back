@@ -22,6 +22,12 @@ export interface CustomRequest extends Request {
   userId: string;
 }
 
+export interface CustomRequestAddPicture extends CustomRequest {
+  body: {
+    picture: PictureCardBodyStructure;
+  };
+}
+
 export type CustomRequestHeader = Pick<CustomRequest, "header" | "userId">;
 
 export type UserCredentialsRequest = Request<
@@ -30,8 +36,13 @@ export type UserCredentialsRequest = Request<
   UserCredentials
 >;
 
-export interface PictureCardStructure {
-  id: string;
+export interface CustomRequestParams extends CustomRequest {
+  params: {
+    pictureId: string;
+  };
+}
+
+export interface PictureCardBodyStructure {
   pictureData: {
     title: string;
     creationDate: string;
@@ -53,7 +64,11 @@ export interface PictureCardStructure {
     colorFive: string;
     colorSixth: string;
   };
-  user: Types.ObjectId;
+  user: Types.ObjectId | string;
+}
+
+export interface PictureCardStructure extends PictureCardBodyStructure {
+  id: string;
 }
 
 export interface PictureCardListStructure {
