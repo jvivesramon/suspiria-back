@@ -64,7 +64,7 @@ export interface PictureCardBodyStructure {
     colorFive: string;
     colorSixth: string;
   };
-  user: Types.ObjectId;
+  user: Types.ObjectId | string;
 }
 
 export interface PictureCardStructure extends PictureCardBodyStructure {

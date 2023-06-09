@@ -1,5 +1,5 @@
 import { Joi } from "express-validation";
-import { type UserCredentials } from "../types";
+import { type UserCredentials } from "../../types";
 
 const loginSchema = {
   body: Joi.object<UserCredentials>({

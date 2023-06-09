@@ -12,7 +12,10 @@ import {
   statusCode,
 } from "../../utils/responseData/responseData.js";
 import { type PictureCardListStructure } from "../../types.js";
-import { pictureCardMock } from "../../../mocks/pictureCardMocks.js";
+import {
+  newPictureMock,
+  pictureCardMock,
+} from "../../../mocks/pictureCardMocks.js";
 
 let server: MongoMemoryServer;
 
@@ -73,6 +76,23 @@ describe("Given a DELETE '/pictures/:pictureId' endpoint", () => {
         .expect(statusCodeExpected);
 
       expect(response.body.message).toBe(expectedMessage);
+    });
+  });
+});
+
+describe("Given a POST '/' endpoint", () => {
+  describe("When it receives a request with a picture", () => {
+    test("Then it should call the response's method status with 201 and the json method with the new picture created", async () => {
+      const expectedStatus = 200;
+      const expectedPicture = { picture: { ...newPictureMock, user: "1" } };
+
+      const response = await request(app)
+        .post(path.pictures)
+        .set("Authorization", `Bearer ${tokenMock}`)
+        .send(expectedPicture)
+        .expect(expectedStatus);
+
+      expect(response.body).toHaveProperty("picture");
     });
   });
 });
