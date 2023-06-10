@@ -25,7 +25,7 @@ export const newPictureMock: PictureCardBodyStructure = {
     colorSecond: "#f8f8ff",
     colorThird: "#f5deb3",
     colorFourth: "#ffe0bd",
-    colorFive: "#003399",
+    colorFifth: "#003399",
     colorSixth: "#0000ff",
   },
 

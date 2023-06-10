@@ -15,7 +15,10 @@ import {
 } from "../../utils/responseData/responseData.js";
 import { Types } from "mongoose";
 import CustomError from "../../../CustomError/CustomError.js";
-import { type CustomRequestParams } from "../../types.js";
+import {
+  type LimitPicturesRequest,
+  type CustomRequestParams,
+} from "../../types.js";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -33,26 +36,44 @@ const res: Partial<Response> = {
 const next = jest.fn();
 
 describe("Given a getPictureCard controllers", () => {
-  const req = {};
+  const req: Partial<LimitPicturesRequest> = {
+    query: {
+      skip: "2",
+      limit: "10",
+    },
+  };
 
   describe("When it receives a response", () => {
+    Suspiria.countDocuments = jest.fn().mockReturnValue(1);
+
     Suspiria.find = jest.fn().mockReturnValue({
-      limit: jest.fn().mockReturnThis(),
-      exec: jest.fn().mockResolvedValue(pictureCardMock),
+      skip: jest.fn().mockReturnValue({
+        limit: jest.fn().mockReturnValue({
+          exec: jest.fn().mockResolvedValue(pictureCardMock),
+        }),
+      }),
     });
 
     test("Then it should call the response's method status 200", async () => {
       const expectedStatus = statusCode.ok;
 
-      await getPictures(req as Request, res as Response, next as NextFunction);
+      await getPictures(
+        req as LimitPicturesRequest,
+        res as Response,
+        next as NextFunction
+      );
 
       expect(res.status).toHaveBeenCalledWith(expectedStatus);
     });
 
     test("Then it should call the response's method json with a list of picture cards", async () => {
-      const expectedPictures = { pictures: pictureCardMock };
+      const expectedPictures = { pictures: pictureCardMock, totalPictures: 1 };
 
-      await getPictures(req as Request, res as Response, next as NextFunction);
+      await getPictures(
+        req as LimitPicturesRequest,
+        res as Response,
+        next as NextFunction
+      );
 
       expect(res.json).toHaveBeenCalledWith(expectedPictures);
     });
@@ -62,12 +83,21 @@ describe("Given a getPictureCard controllers", () => {
     test("Then it should call the next function with the error 'General server error'", async () => {
       const error = errorMessages.generalError;
 
+      Suspiria.countDocuments = jest.fn().mockReturnValue(1);
+
       Suspiria.find = jest.fn().mockReturnValue({
-        limit: jest.fn().mockReturnThis(),
-        exec: jest.fn().mockRejectedValue(error),
+        skip: jest.fn().mockReturnValue({
+          limit: jest.fn().mockReturnValue({
+            exec: jest.fn().mockRejectedValue(error),
+          }),
+        }),
       });
 
-      await getPictures(req as Request, res as Response, next as NextFunction);
+      await getPictures(
+        req as LimitPicturesRequest,
+        res as Response,
+        next as NextFunction
+      );
 
       expect(next).toHaveBeenCalledWith(error);
     });

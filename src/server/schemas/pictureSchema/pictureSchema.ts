@@ -17,7 +17,7 @@ const pictureSchema = {
         colorSecond: Joi.string().required(),
         colorThird: Joi.string().required(),
         colorFourth: Joi.string(),
-        colorFive: Joi.string(),
+        colorFifth: Joi.string(),
         colorSixth: Joi.string(),
       }),
       temperatureColor: Joi.object({

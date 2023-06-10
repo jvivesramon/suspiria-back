@@ -35,7 +35,7 @@ const suspiriaItem = new Schema(
         required: true,
       },
       colorFourth: String,
-      colorFive: String,
+      colorFifth: String,
       colorSixth: String,
     },
     user: {
