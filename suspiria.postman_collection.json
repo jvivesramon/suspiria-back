@@ -95,6 +95,65 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "DELETE /:pictureId",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDcwN2RjZDExOWE2ZmM4NWJmODdkNTAiLCJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2ODU4ODM2Njl9._k9VKcye_JYxIE3Wxh9igYi8keNxVK2zgKiKIJ3GuuA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:4005/pictures/6481977532fb9907f485b470",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4005",
+          "path": ["pictures", "6481977532fb9907f485b470"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST /pictures/",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDcwN2RjZDExOWE2ZmM4NWJmODdkNTAiLCJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2ODYyNDkxMDZ9.L8XW3IStAVmEU1kM2t4TxBR76kKyqkBT6QcZzX4mUyk",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\n    {\"picture\": {   \n\n  \"pictureData\": {\n    \"title\": \"Seated Woman with Bent Knees\",\n    \"creationDate\": \"1917\",\n    \"author\": \"Egon Schiele\",\n    \"movement\": \"Austrian Expressionist\"\n  },\n  \"image\": \"https://i.ibb.co/hLqWdbD/woman-seated-on-her-knees.webp\",\n  \"description\": \"This a powerful painting that depicts a seated female figure in a twisted pose. The artwork features bold, dark lines and muted, earthy colors, creating a somber and introspective atmosphere. Schiele's unique style captures the emotional intensity of the subject, conveying vulnerability and existential angst.\",\n  \"temperatureColor\": {\n    \"warm\": true,\n    \"cold\": false,\n    \"mixed\": false\n  },\n  \"colors\": {\n    \"colorFirst\": \"#f5e6d3\",\n    \"colorSecond\": \"#cc8e4a\",\n    \"colorThird\": \"#cc504d\",\n    \"colorFourth\": \"#42a188\",\n    \"colorFive\": \"#1f4442\",\n    \"colorSixth\": \"#3a4888\"\n  },\n  \"user\": \"deibeduuxn\"\n}}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:4005/pictures/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4005",
+          "path": ["pictures", ""]
+        }
+      },
+      "response": []
     }
   ]
 }

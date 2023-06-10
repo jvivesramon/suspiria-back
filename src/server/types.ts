@@ -36,6 +36,12 @@ export type UserCredentialsRequest = Request<
   UserCredentials
 >;
 
+export interface LimitPicturesRequest extends Request {
+  query: {
+    skip: string;
+    limit: string;
+  };
+}
 export interface CustomRequestParams extends CustomRequest {
   params: {
     pictureId: string;
@@ -61,7 +67,7 @@ export interface PictureCardBodyStructure {
     colorSecond: string;
     colorThird: string;
     colorFourth: string;
-    colorFive: string;
+    colorFifth: string;
     colorSixth: string;
   };
   user: Types.ObjectId | string;

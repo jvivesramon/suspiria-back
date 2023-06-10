@@ -1,4 +1,4 @@
-import { type NextFunction, type Request, type Response } from "express";
+import { type NextFunction, type Response } from "express";
 import createDebug from "debug";
 import chalk from "chalk";
 import Suspiria from "../../../database/models/Suspiria.js";
@@ -6,6 +6,7 @@ import CustomError from "../../../CustomError/CustomError.js";
 import {
   type CustomRequestParams,
   type CustomRequestAddPicture,
+  type LimitPicturesRequest,
 } from "../../types.js";
 import { statusCode } from "../../utils/responseData/responseData.js";
 import { Types } from "mongoose";
@@ -15,13 +16,22 @@ const debug = createDebug(
 );
 
 export const getPictures = async (
-  _req: Request,
+  req: LimitPicturesRequest,
   res: Response,
   next: NextFunction
 ) => {
+  const {
+    query: { limit, skip },
+  } = req;
+
+  const newLimit = Number(limit);
+  const newSkip = Number(skip) * newLimit;
+
   try {
-    const pictures = await Suspiria.find().limit(10).exec();
-    res.status(200).json({ pictures });
+    const totalPictures = await Suspiria.countDocuments();
+    const pictures = await Suspiria.find().skip(newSkip).limit(newLimit).exec();
+
+    res.status(200).json({ pictures, totalPictures });
   } catch (error) {
     debug(chalk.bgMagenta(error.message));
 
