@@ -21,15 +21,25 @@ export const getPictures = async (
   next: NextFunction
 ) => {
   const {
-    query: { limit, skip },
+    query: { limit, skip, filter },
   } = req;
 
   const newLimit = Number(limit);
   const newSkip = Number(skip) * newLimit;
 
   try {
-    const totalPictures = await Suspiria.countDocuments();
-    const pictures = await Suspiria.find().skip(newSkip).limit(newLimit).exec();
+    let pictureQuery = {};
+
+    if (filter) {
+      pictureQuery = { temperatureColor: { [filter]: true } };
+    }
+
+    const totalPictures = await Suspiria.where(pictureQuery).countDocuments();
+    const pictures = await Suspiria.find(pictureQuery)
+      .sort({ _id: -1 })
+      .skip(newSkip)
+      .limit(newLimit)
+      .exec();
 
     res.status(200).json({ pictures, totalPictures });
   } catch (error) {

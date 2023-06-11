@@ -40,6 +40,7 @@ export interface LimitPicturesRequest extends Request {
   query: {
     skip: string;
     limit: string;
+    filter: string;
   };
 }
 export interface CustomRequestParams extends CustomRequest {

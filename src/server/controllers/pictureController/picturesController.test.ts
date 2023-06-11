@@ -40,16 +40,21 @@ describe("Given a getPictureCard controllers", () => {
     query: {
       skip: "2",
       limit: "10",
+      filter: "warm",
     },
   };
 
-  describe("When it receives a response", () => {
-    Suspiria.countDocuments = jest.fn().mockReturnValue(1);
+  describe("When it receives a request", () => {
+    Suspiria.where = jest.fn().mockReturnValue({
+      countDocuments: jest.fn().mockResolvedValue(1),
+    });
 
     Suspiria.find = jest.fn().mockReturnValue({
-      skip: jest.fn().mockReturnValue({
-        limit: jest.fn().mockReturnValue({
-          exec: jest.fn().mockResolvedValue(pictureCardMock),
+      sort: jest.fn().mockReturnValue({
+        skip: jest.fn().mockReturnValue({
+          limit: jest.fn().mockReturnValue({
+            exec: jest.fn().mockResolvedValue(pictureCardMock),
+          }),
         }),
       }),
     });
@@ -83,12 +88,16 @@ describe("Given a getPictureCard controllers", () => {
     test("Then it should call the next function with the error 'General server error'", async () => {
       const error = errorMessages.generalError;
 
-      Suspiria.countDocuments = jest.fn().mockReturnValue(1);
+      Suspiria.where = jest.fn().mockReturnValue({
+        countDocuments: jest.fn().mockResolvedValue(1),
+      });
 
       Suspiria.find = jest.fn().mockReturnValue({
-        skip: jest.fn().mockReturnValue({
-          limit: jest.fn().mockReturnValue({
-            exec: jest.fn().mockRejectedValue(error),
+        sort: jest.fn().mockReturnValue({
+          skip: jest.fn().mockReturnValue({
+            limit: jest.fn().mockReturnValue({
+              exec: jest.fn().mockRejectedValue(error),
+            }),
           }),
         }),
       });
