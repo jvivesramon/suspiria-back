@@ -7,6 +7,7 @@ import {
 import {
   addPicture,
   deletePicture,
+  getOnePicture,
   getPictures,
 } from "./picturesController.js";
 import {
@@ -171,7 +172,7 @@ describe("Given a deletePicture controller", () => {
   });
 });
 
-describe("Given a addPicture controller", () => {
+describe("Given an addPicture controller", () => {
   const user = new Types.ObjectId().toString();
 
   const req: Partial<CustomRequest> = {
@@ -206,6 +207,50 @@ describe("Given a addPicture controller", () => {
       await addPicture(req as CustomRequest, res as Response, next);
 
       expect(next).toHaveBeenCalledWith(error);
+    });
+  });
+});
+
+describe("Given a getOnePicture controller", () => {
+  describe("When it receives a request with a valid picture id", () => {
+    test("Then it should return the picture requested", async () => {
+      const status = 200;
+      const selectedPicture = { ...pictureCardMock };
+
+      const req: Partial<CustomRequest> = {
+        params: {
+          idPicture,
+        },
+      };
+
+      Suspiria.findById = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(selectedPicture),
+      });
+
+      await getOnePicture(req as CustomRequestParams, res as Response, next);
+
+      expect(res.status).toHaveBeenCalledWith(status);
+      expect(res.json).toHaveBeenCalledWith({ picture: selectedPicture });
+    });
+  });
+
+  describe("When it receives a request with a invalid picture id", () => {
+    test("Then it should call the next function with an error message", async () => {
+      const errorMessage = new Error("Couldn't find the picture");
+
+      const req: Partial<CustomRequest> = {
+        params: {
+          idPicture,
+        },
+      };
+
+      Suspiria.findById = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(false),
+      });
+
+      await getOnePicture(req as CustomRequestParams, res as Response, next);
+
+      expect(next).toHaveBeenCalledWith(errorMessage);
     });
   });
 });
