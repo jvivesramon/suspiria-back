@@ -40,3 +40,9 @@ export const pictureCardMock: PictureCardStructure = {
 export const pictureListMock: PictureCardListStructure = {
   pictures: [pictureCardMock],
 };
+
+export const initialtemperatureColorState = {
+  warm: false,
+  cold: false,
+  mixed: false,
+};

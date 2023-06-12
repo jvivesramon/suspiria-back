@@ -10,6 +10,7 @@ import {
 } from "../../types.js";
 import { statusCode } from "../../utils/responseData/responseData.js";
 import { Types } from "mongoose";
+import { initialtemperatureColorState } from "../../../mocks/pictureCardMocks.js";
 
 const debug = createDebug(
   "suspiria-api:src:server:controller:pictureCardController:"
@@ -31,7 +32,9 @@ export const getPictures = async (
     let pictureQuery = {};
 
     if (filter) {
-      pictureQuery = { temperatureColor: { [filter]: true } };
+      pictureQuery = {
+        temperatureColor: { ...initialtemperatureColorState, [filter]: true },
+      };
     }
 
     const totalPictures = await Suspiria.where(pictureQuery).countDocuments();
@@ -91,6 +94,26 @@ export const addPicture = async (
 
     res.status(statusCode.ok).json({ picture: newPicture });
   } catch (error) {
+    next(error);
+  }
+};
+
+export const getOnePicture = async (
+  req: CustomRequestParams,
+  res: Response,
+  next: NextFunction
+) => {
+  const { pictureId } = req.params;
+
+  try {
+    const picture = await Suspiria.findById(pictureId).exec();
+
+    if (!picture) {
+      throw new CustomError(400, "Couldn't find the picture");
+    }
+
+    res.status(statusCode.ok).json({ picture });
+  } catch (error: unknown) {
     next(error);
   }
 };
