@@ -3,6 +3,7 @@ import authMiddleware from "../../middlewares/authMiddleware/authMiddleware.js";
 import {
   addPicture,
   deletePicture,
+  getOnePicture,
   getPictures,
 } from "../../controllers/pictureController/picturesController.js";
 import pictureSchema from "../../schemas/pictureSchema/pictureSchema.js";
@@ -20,5 +21,7 @@ pictureRouter.post(
   validate(pictureSchema, {}, { abortEarly: false }),
   addPicture
 );
+
+pictureRouter.get("/:pictureId", authMiddleware, getOnePicture);
 
 export default pictureRouter;
