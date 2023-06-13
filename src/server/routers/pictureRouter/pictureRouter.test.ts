@@ -82,7 +82,7 @@ describe("Given a DELETE '/pictures/:pictureId' endpoint", () => {
 
 describe("Given a POST '/' endpoint", () => {
   describe("When it receives a request with a picture", () => {
-    test("Then it should call the response's method status with 201 and the json method with the new picture created", async () => {
+    test("Then it should call the response's method status with 200 and the json method with the new picture created", async () => {
       const expectedStatus = 200;
       const expectedPicture = { picture: { ...newPictureMock, user: "1" } };
 
@@ -93,6 +93,28 @@ describe("Given a POST '/' endpoint", () => {
         .expect(expectedStatus);
 
       expect(response.body).toHaveProperty("picture");
+    });
+  });
+});
+
+describe("Given a GET '/pictures/:pictureId' endpoint", () => {
+  beforeAll(async () => {
+    await Suspiria.create(pictureCardMock);
+  });
+
+  describe("When it receives a request with a valid picture id", () => {
+    test("Then it should call the response's method status with 200 and the json method with the picture selected", async () => {
+      const statusCodeExpected = 200;
+      const expectedProperty = "picture";
+
+      const picture = await Suspiria.find().exec();
+
+      const response = await request(app)
+        .get(`/pictures/${picture[0]._id.toString()}`)
+        .set("Authorization", `Bearer ${tokenMock}`)
+        .expect(statusCodeExpected);
+
+      expect(response.body).toHaveProperty(expectedProperty);
     });
   });
 });
