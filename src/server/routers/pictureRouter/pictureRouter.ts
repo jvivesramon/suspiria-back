@@ -5,6 +5,7 @@ import {
   deletePicture,
   getOnePicture,
   getPictures,
+  updatePicture,
 } from "../../controllers/pictureController/picturesController.js";
 import pictureSchema from "../../schemas/pictureSchema/pictureSchema.js";
 import { validate } from "express-validation";
@@ -23,5 +24,7 @@ pictureRouter.post(
 );
 
 pictureRouter.get("/:pictureId", authMiddleware, getOnePicture);
+
+pictureRouter.put("/", authMiddleware, updatePicture);
 
 export default pictureRouter;

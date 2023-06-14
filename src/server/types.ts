@@ -49,6 +49,11 @@ export interface CustomRequestParams extends CustomRequest {
   };
 }
 
+export interface CustomRequestUpdate extends Request {
+  userId: string;
+  body: PictureCardStructure;
+}
+
 export interface PictureCardBodyStructure {
   pictureData: {
     title: string;

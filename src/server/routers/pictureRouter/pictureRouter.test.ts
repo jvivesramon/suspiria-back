@@ -15,6 +15,7 @@ import { type PictureCardListStructure } from "../../types.js";
 import {
   newPictureMock,
   pictureCardMock,
+  pictureUpdatedMock,
 } from "../../../mocks/pictureCardMocks.js";
 
 let server: MongoMemoryServer;
@@ -115,6 +116,25 @@ describe("Given a GET '/pictures/:pictureId' endpoint", () => {
         .expect(statusCodeExpected);
 
       expect(response.body).toHaveProperty(expectedProperty);
+    });
+  });
+});
+
+describe("Given a PUT '/' endpoint", () => {
+  describe("When it receives a request with a valid picture", () => {
+    test("Then it should call the response's method status with 200 and the json method with the 'Picture succesfully updated' message", async () => {
+      const { _id: id } = await Suspiria.create(pictureCardMock);
+
+      const message = "Picture succesfully updated";
+      const statusCodeExpected = 200;
+
+      const response = await request(app)
+        .put(`${path.pictures}`)
+        .send({ ...pictureUpdatedMock, id })
+        .set("Authorization", `Bearer ${tokenMock}`)
+        .expect(statusCodeExpected);
+
+      expect(response.body.message).toBe(message);
     });
   });
 });
