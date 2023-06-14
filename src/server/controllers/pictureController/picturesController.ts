@@ -7,8 +7,12 @@ import {
   type CustomRequestParams,
   type CustomRequestAddPicture,
   type LimitPicturesRequest,
+  type CustomRequestUpdate,
 } from "../../types.js";
-import { statusCode } from "../../utils/responseData/responseData.js";
+import {
+  errorMessages,
+  statusCode,
+} from "../../utils/responseData/responseData.js";
 import { Types } from "mongoose";
 import { initialtemperatureColorState } from "../../../mocks/pictureCardMocks.js";
 
@@ -26,7 +30,7 @@ export const getPictures = async (
   } = req;
 
   const newLimit = Number(limit);
-  const newSkip = Number(skip) * newLimit;
+  const newSkip = Number(skip);
 
   try {
     let pictureQuery = {};
@@ -114,6 +118,33 @@ export const getOnePicture = async (
 
     res.status(statusCode.ok).json({ picture });
   } catch (error: unknown) {
+    next(error);
+  }
+};
+
+export const updatePicture = async (
+  req: CustomRequestUpdate,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { body, userId } = req;
+
+    const updatedPicture = await Suspiria.findByIdAndUpdate(body.id, {
+      ...body,
+      user: new Types.ObjectId(userId),
+      _id: new Types.ObjectId(body.id),
+    });
+
+    if (!updatedPicture) {
+      throw new CustomError(
+        statusCode.badRequest,
+        errorMessages.validationFailed
+      );
+    }
+
+    res.status(statusCode.ok).json({ message: "Picture succesfully updated" });
+  } catch (error) {
     next(error);
   }
 };
