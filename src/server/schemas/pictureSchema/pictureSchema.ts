@@ -1,9 +1,9 @@
 import { Joi } from "express-validation";
-import { type PictureCardBodyStructure } from "../../types";
+import { type PictureCardStructure } from "../../types";
 
 const pictureSchema = {
   body: Joi.object({
-    picture: Joi.object<PictureCardBodyStructure>({
+    picture: Joi.object<PictureCardStructure>({
       image: Joi.string().required(),
       pictureData: Joi.object({
         title: Joi.string().required(),
@@ -25,7 +25,8 @@ const pictureSchema = {
         cold: Joi.boolean(),
         mixed: Joi.boolean(),
       }),
-      user: Joi.string(),
+      user: Joi.optional(),
+      id: Joi.optional(),
     }),
   }),
 };
