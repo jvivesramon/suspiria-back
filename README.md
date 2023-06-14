@@ -236,3 +236,125 @@
   "description": "This a powerful painting that depicts a seated female figure in a twisted pose. The artwork features bold, dark lines and muted, earthy colors, creating a somber and introspective atmosphere. Schiele's unique style captures the emotional intensity of the subject, conveying vulnerability and existential angst.",
   user: "1"
   }}
+
+  ## <u>Get One Picture</u>
+
+### method:
+
+- GET
+
+### url:
+
+- https://judit-vives-final-project-back-202304-bcn.onrender.com/pictures/
+
+### request:
+
+#### paramas:
+
+- id: "1"
+
+#### body:
+
+- { auth: { bearer: { token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDcwN2RjZDExOWE2ZmM4NWJmODdkNTAiLCJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2ODU5MDQ1NDB9.x3B_jZIfhAPMfhxa4cwWJRbnev4PUXUtPn3JqWWfJn8"}}}
+- { picture: {
+  "pictureData": {
+  "title": "Seated Woman with Bent Knees",
+  "creationdDate": "1917",
+  "author": "Egon Schiele",
+  "movement": "Austrian Expressionist"
+  },
+  "temperatureColor": {
+  "warm": true,
+  "cold": false,
+  "mixed": false
+  },
+  "colors": {
+  "colorFirst": "#f5e6d3",
+  "colorSecond": "#cc8e4a",
+  "colorThird": "#cc504d",
+  "colorFourth": "#42a188",
+  "colorFive": "#1f4442",
+  "colorSixth": "#3a4888"
+  },
+  "image": "https://cdn.discordapp.com/attachments/1094550845909114921/1114888918928736266/seated-woman_1.png",
+  "description": "This a powerful painting that depicts a seated female figure in a twisted pose. The artwork features bold, dark lines and muted, earthy colors, creating a somber and introspective atmosphere. Schiele's unique style captures the emotional intensity of the subject, conveying vulnerability and existential angst.",
+  user: "1",
+  id: "1"
+  }
+  }
+
+### response:
+
+- 200 Ok,
+- - { picture: {
+    "pictureData": {
+    "title": "Seated Woman with Bent Knees",
+    "creationdDate": "1917",
+    "author": "Egon Schiele",
+    "movement": "Austrian Expressionist"
+    },
+    "temperatureColor": {
+    "warm": true,
+    "cold": false,
+    "mixed": false
+    },
+    "colors": {
+    "colorFirst": "#f5e6d3",
+    "colorSecond": "#cc8e4a",
+    "colorThird": "#cc504d",
+    "colorFourth": "#42a188",
+    "colorFive": "#1f4442",
+    "colorSixth": "#3a4888"
+    },
+    "image": "https://cdn.discordapp.com/attachments/1094550845909114921/1114888918928736266/seated-woman_1.png",
+    "description": "This a powerful painting that depicts a seated female figure in a twisted pose. The artwork features bold, dark lines and muted, earthy colors, creating a somber and introspective atmosphere. Schiele's unique style captures the emotional intensity of the subject, conveying vulnerability and existential angst.",
+    user: "1",
+    id: "1"
+    }
+    }
+
+    ## <u>Update pictures</u>
+
+### method:
+
+- PUT
+
+### url:
+
+- https://judit-vives-final-project-back-202304-bcn.onrender.com/pictures/
+
+### request:
+
+#### body:
+
+- { auth: { bearer: { token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDcwN2RjZDExOWE2ZmM4NWJmODdkNTAiLCJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2ODU5MDQ1NDB9.x3B_jZIfhAPMfhxa4cwWJRbnev4PUXUtPn3JqWWfJn8"}}}
+- {
+  "pictureData": {
+  "title": "Seated Woman with Bent Knees",
+  "creationdDate": "1917",
+  "author": "Egon Schiele",
+  "movement": "Austrian Expressionist"
+  },
+  "temperatureColor": {
+  "warm": true,
+  "cold": false,
+  "mixed": false
+  },
+  "colors": {
+  "colorFirst": "#f5e6d3",
+  "colorSecond": "#cc8e4a",
+  "colorThird": "#cc504d",
+  "colorFourth": "#42a188",
+  "colorFive": "#1f4442",
+  "colorSixth": "#3a4888"
+  },
+  "image": "https://cdn.discordapp.com/attachments/1094550845909114921/1114888918928736266/seated-woman_1.png",
+  "description": "This a powerful painting that depicts a seated female figure in a twisted pose. The artwork features bold, dark lines and muted, earthy colors, creating a somber and introspective atmosphere. Schiele's unique style captures the emotional intensity of the subject, conveying vulnerability and existential angst.",
+  user: "1",
+  id: "1"
+  }
+
+### response:
+
+- 200 Ok,
+- { message: Picture succesfully updated}

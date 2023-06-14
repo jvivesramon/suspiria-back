@@ -176,7 +176,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"id\": \"6488fa0b99c6d65f58f91eb9\",\n  \"pictureData\": {\n    \"title\": \"The Couple\",\n    \"author\": \"Judit Vives\",\n    \"movement\": \"Digital Art Illustration\",\n    \"creationDate\": \"2021\"\n  },\n  \"image\": \"https://i.ibb.co/0nzc9pS/the-couple.webp\",\n  \"description\": \"The colors in this illustration evoke a captivating atmosphere of tension and intrigue. The contrasting dark tones and vibrant accents highlight the power dynamics and emotional detachment within the depicted couple's relationship. Through the symbolism of black and the dynamic touches of color, the composition conveys a narrative of dominance and disconnection.\",\n  \"temperatureColor\": {\n    \"warm\": false,\n    \"cold\": true,\n    \"mixed\": false\n  },\n  \"colors\": {\n    \"colorFirst\": \"#d7cbbf\",\n    \"colorSecond\": \"#dfbc09\",\n    \"colorThird\": \"#bb4335\",\n    \"colorFourth\": \"#6c8590\",\n    \"colorFive\": \"#7b6957\",\n    \"colorSixth\": \"#09090a\"\n  },\n  \"user\": \"64707dcd119a6fc85bf87d50\"\n}",
+          "raw": "{\n  \"id\": \"6488fa0b99c6d65f58f91eb9\",\n  \"pictureData\": {\n    \"title\": \"The Couple\",\n    \"author\": \"Judit Vives\",\n    \"movement\": \"Digital Art Illustration\",\n    \"creationDate\": \"2021\"\n  },\n  \"image\": \"https://i.ibb.co/0nzc9pS/the-couple.webp\",\n  \"description\": \"The colors in this illustration evoke a captivating atmosphere of tension and intrigue. The contrasting dark tones and vibrant accents highlight the power dynamics and emotional detachment within the depicted couple's relationship. Through the symbolism of black and the dynamic touches of color, the composition conveys a narrative of dominance and disconnection.\",\n  \"temperatureColor\": {\n    \"warm\": false,\n    \"cold\": true,\n    \"mixed\": false\n  },\n  \"colors\": {\n    \"colorFirst\": \"#d7cbbf\",\n    \"colorSecond\": \"#dfbc09\",\n    \"colorThird\": \"#bb4335\",\n    \"colorFourth\": \"#6c8590\",\n    \"colorFifth\": \"#7b6957\",\n    \"colorSixth\": \"#09090a\"\n  },\n  \"user\": \"64707dcd119a6fc85bf87d50\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -189,6 +189,31 @@
           "host": ["localhost"],
           "port": "4005",
           "path": ["pictures"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET /pictures/:pictureId",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDcwN2RjZDExOWE2ZmM4NWJmODdkNTAiLCJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2ODYyNDkxMDZ9.L8XW3IStAVmEU1kM2t4TxBR76kKyqkBT6QcZzX4mUyk",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:4005/pictures/648a0c75191f392f8907d8ad",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4005",
+          "path": ["pictures", "648a0c75191f392f8907d8ad"]
         }
       },
       "response": []
