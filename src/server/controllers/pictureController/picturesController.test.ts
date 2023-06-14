@@ -9,6 +9,7 @@ import {
   deletePicture,
   getOnePicture,
   getPictures,
+  updatePicture,
 } from "./picturesController.js";
 import {
   errorMessages,
@@ -19,6 +20,7 @@ import CustomError from "../../../CustomError/CustomError.js";
 import {
   type LimitPicturesRequest,
   type CustomRequestParams,
+  type CustomRequestUpdate,
 } from "../../types.js";
 
 beforeEach(() => {
@@ -251,6 +253,56 @@ describe("Given a getOnePicture controller", () => {
       await getOnePicture(req as CustomRequestParams, res as Response, next);
 
       expect(next).toHaveBeenCalledWith(errorMessage);
+    });
+  });
+});
+
+describe("Given updatePicture controller", () => {
+  const user = new Types.ObjectId().toString();
+  const id = new Types.ObjectId().toString();
+
+  const req: Partial<CustomRequestUpdate> = {
+    body: { ...newPictureMock, id, user },
+    userId: user,
+  };
+
+  describe("When it is called with a valid picture", () => {
+    test("Then it should call response's method status with 200 and the json method with the 'Picture succesfully updated' message", async () => {
+      const message = "Picture succesfully updated";
+
+      Suspiria.findByIdAndUpdate = jest
+        .fn()
+        .mockResolvedValue({ ...newPictureMock, id, user });
+
+      await updatePicture(
+        req as CustomRequestUpdate,
+        res as Response,
+        next as NextFunction
+      );
+
+      expect(res.status).toHaveBeenCalledWith(statusCode.ok);
+      expect(res.json).toHaveBeenCalledWith({
+        message,
+      });
+    });
+  });
+
+  describe("When it receives an invalid picture", () => {
+    test("Then it should call next with the error message", async () => {
+      const error = new CustomError(
+        statusCode.badRequest,
+        errorMessages.validationFailed
+      );
+
+      Suspiria.findByIdAndUpdate = jest.fn().mockResolvedValue(undefined);
+
+      await updatePicture(
+        req as CustomRequestUpdate,
+        res as Response,
+        next as NextFunction
+      );
+
+      expect(next).toHaveBeenCalledWith(error);
     });
   });
 });
