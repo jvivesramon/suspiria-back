@@ -32,8 +32,35 @@ export const newPictureMock: PictureCardBodyStructure = {
   user: new Types.ObjectId(),
 };
 
+export const pictureUpdatedMock = {
+  id: "6488fa0b99c6d65f58f91eb9",
+  pictureData: {
+    title: "The Couple",
+    author: "Judit Vives",
+    movement: "Digital Art Illustration",
+    creationDate: "2021",
+  },
+  image: "https://i.ibb.co/0nzc9pS/the-couple.webp",
+  description:
+    "The colors in this illustration evoke a captivating atmosphere of tension and intrigue. The contrasting dark tones and vibrant accents highlight the power dynamics and emotional detachment within the depicted couple's relationship. Through the symbolism of black and the dynamic touches of color, the composition conveys a narrative of dominance and disconnection.",
+  temperatureColor: {
+    warm: false,
+    cold: true,
+    mixed: false,
+  },
+  colors: {
+    colorFirst: "#d7cbbf",
+    colorSecond: "#dfbc09",
+    colorThird: "#bb4335",
+    colorFourth: "#6c8590",
+    colorFifth: "#7b6957",
+    colorSixth: "#09090a",
+  },
+  user: new Types.ObjectId(),
+};
+
 export const pictureCardMock: PictureCardStructure = {
-  id: "1234",
+  id: "6488fa0b99c6d65f58f91eb9",
   ...newPictureMock,
 };
 
